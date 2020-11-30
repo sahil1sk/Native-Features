@@ -1,7 +1,10 @@
-import 'dart:io';
+import 'dart:io'; // to use File datatype
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as path; // helps to construct the path where we store file
+import 'package:path_provider/path_provider.dart' as syspaths; // helps to finding the path
+
 
 class ImageInput extends StatefulWidget {
   @override
@@ -17,6 +20,13 @@ class _ImageInputState extends State<ImageInput> {
       source: ImageSource.camera, 
       maxWidth: 600
     );
+    setState(() {
+      _storedImage = File(imageFile.path); // converting into the file path to use
+    });
+
+    final appDir = await syspaths.getApplicationDocumentsDirectory(); // we are able to get sd card like syspath.getExter..
+    final filename = path.basename(imageFile.path); // here we getting the filename in this way
+    final savedImage = await File(imageFile.path).copy('${appDir.path}/$filename'); // so here copy the file to another path
 
   }
 
