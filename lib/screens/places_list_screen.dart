@@ -19,22 +19,30 @@ class PlacesListScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Consumer<GreatPlaces>(
-        child: Center(
-          child: Text('Got no places yet!'),
-        ),          // greatPlaces the object given by provider having GreatPlaces functions and data
-        builder: (ctx, greatPlaces, child) => greatPlaces.items.length <= 0 
-        ? child 
-        : ListView.builder(
-          itemCount: greatPlaces.items.length,
-          itemBuilder: (ctx, index) => ListTile(
-            leading: CircleAvatar(
-              backgroundImage: FileImage(greatPlaces.items[index].image), // seting the file image
+      body: FutureBuilder(
+        future: Provider.of<GreatPlaces>(context, listen: false).fetchAndSetPlaces(),
+        // while connection state in waiting we show loading indicator
+        builder: (ctx, snapshot) => snapshot.connectionState == ConnectionState.waiting 
+        ? Center(
+          child: CircularProgressIndicator(),
+        ) 
+        : Consumer<GreatPlaces>(
+          child: Center(
+            child: Text('Got no places yet!'),
+          ),          // greatPlaces the object given by provider having GreatPlaces functions and data
+          builder: (ctx, greatPlaces, child) => greatPlaces.items.length <= 0 
+          ? child 
+          : ListView.builder(
+            itemCount: greatPlaces.items.length,
+            itemBuilder: (ctx, index) => ListTile(
+              leading: CircleAvatar(
+                backgroundImage: FileImage(greatPlaces.items[index].image), // seting the file image
+              ),
+              title: Text(greatPlaces.items[index].title),
+              onTap: () {
+                // Go to detail page
+              },
             ),
-            title: Text(greatPlaces.items[index].title),
-            onTap: () {
-              // Go to detail page
-            },
           ),
         ),
       ),
