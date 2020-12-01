@@ -35,6 +35,7 @@ class PlacesListScreen extends StatelessWidget {
             onTap: () {
               // Go to detail page
             },
+          ),
         ),
       ),
     );
