@@ -28,7 +28,8 @@ dependencies:
   path_provider: ^1.6.24    # helps to find the path
   path: ^1.7.0              # helps us to construct the path
   sqflite: ^1.3.0           # helps to use sqlite database
-  location: ^3.0.0          # for getting the location
+  location: ^3.0.0          # for getting the location 
+  google_maps_flutter: ^1.0.6 # for showing the maps
   
 
   # The following adds the Cupertino Icons font to your application.
