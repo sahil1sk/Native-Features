@@ -11,8 +11,8 @@ class DBHelper {
     return sql.openDatabase(
       path.join(dbPath, 'places.db'), 
       onCreate: (db, version) { // if the file not find then onCreate method take place
-      // db is the database and version is the current version // type text or string
-      return db.execute('CREATE TABLE user_places(id TEXT PRIMARY KEY, title TEXT, image TEXT)');
+      // db is the database and version is the current version // type text or string // REAL help to store decimal value
+      return db.execute('CREATE TABLE user_places(id TEXT PRIMARY KEY, title TEXT, image TEXT, loc_lat REAL, loc_lng REAL, address TEXT)');
     }, version: 1); // we also able to set version everytime
   }
 

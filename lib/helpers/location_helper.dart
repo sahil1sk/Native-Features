@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
+
 const GOOGLE_API_KEY = '';  
 
 class LocationHelper {
@@ -5,4 +9,12 @@ class LocationHelper {
 		// search for Overview | Maps Static Api // you will finad the given return link here
 		return 'https://maps.googleapis.com/maps/api/staticmap?center=&$latitude,$longitude&zoom=13&size=600x300&maptype=roadmap&markers=color:red%7Clabel:A%7C$latitude,$longitude&key=$GOOGLE_API_KEY';
 	}
+
+  static Future<String> getPlaceAddress(double lat, double lng) async {
+    // this url will give back us address when we send latlng
+    final url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=$GOOGLE_API_KEY';
+    final response = await http.get(url);
+    // after decoding we return the [0] 1st ['results'] result of ['formatted_address'] formatted type in human readable
+    return json.decode(response.body)['results'][0]['formatted_address'];
+  }
 }
